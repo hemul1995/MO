@@ -26,7 +26,7 @@ namespace MethodsOptimisation
         {
             singleSearch s = new singleSearch();
 
-
+            //Добавить годный функционал
             //qwertyasdf
             //minArg test = s.getMinPowell(0, 2, 1e-10);
             minArg test = s.getMinDih(-1, 1, 1e-10);
