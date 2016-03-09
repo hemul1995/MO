@@ -29,7 +29,7 @@ namespace MethodsOptimisation
             //Добавить годный функционал
             //qwertyasdf
             //minArg test = s.getMinPowell(0, 2, 1e-10);
-            minArg test = s.getMinDih(-1, 1, 1e-10);
+            minArg test = s.getMinParabol(5, 3);
             //minArg test = s.getMinParabol(0, 1e-10);
             //textBox1.Text = "" + s.getMinPowell(-0.2, 2, 1e-5);
             //textBox1.Text = "" + s.getMinDih(-1, 1, 1e-15);

@@ -17,11 +17,11 @@ namespace MethodsOptimisation
         double Fx(double x)
         {
             //double y = x*x;
-            return (1-x)*(1-x) + 100 * (1-x*x)*(1-x*x);
-            //return x*x*x;
+            //return (1-x)*(1-x) + 100 * (1-x*x)*(1-x*x);
+            return Math.Sin(x);
         }
 
-        public minArg getMinPowell(double a, double b, double eps)
+        public minArg getMinPowell(double a, double b, double eps)//плохой метод
         {
             double x1, x2, x3, dx, f1, f2, f3, a1, a2, x_a, fx_a, fmin, xmin = 0, s1, s2, s3;
             double[] x = new double[4];
