@@ -42,6 +42,9 @@ namespace MethodsOptimisation
             //x0[3] = 0.3 + 0.1;
             //x0[4] = 0.5 + 0.1;
             Gauss ss = new Gauss();
+            Nelder_Mid nd = new Nelder_Mid();
+
+            nd._Nelder_Mid();
             //ss.Gauss(x0);
             textBox1.Text = "" + ss._Gauss(x0);
             //textBox2.Text = "" + test.f;
