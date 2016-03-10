@@ -34,8 +34,13 @@ namespace MethodsOptimisation
             //textBox1.Text = "" + s.getMinPowell(-0.2, 2, 1e-5);
             //textBox1.Text = "" + s.getMinDih(-1, 1, 1e-15);
             double[] x0 = new double[2];
-            x0[0] = 50;
-            x0[1] = 50;
+            x0[0] = 5;
+            x0[1] = 5;
+            //x0[0] = 50 + 1;
+            //x0[1] = 1 + 1;
+            //x0[2] = 0.3 + 0.1;
+            //x0[3] = 0.3 + 0.1;
+            //x0[4] = 0.5 + 0.1;
             Gauss ss = new Gauss();
             //ss.Gauss(x0);
             textBox1.Text = "" + ss._Gauss(x0);
