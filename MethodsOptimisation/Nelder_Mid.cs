@@ -6,201 +6,196 @@ using System.Threading.Tasks;
 
 namespace MethodsOptimisation
 {
+    struct point
+    {
+        public double f;
+        public double[] x;
+    }
     class Nelder_Mid
     {
+        int CC = 0;
         
-        struct point
+
+        double Fx(double[] arg)
         {
-            public double f;
-            public double[] x;
+            CC++;
+            double func;
+            //double y = 0;
+            func = (1 - arg[0]) * (1 - arg[0]) + 100 * (arg[1] - arg[0] * arg[0]) * (arg[1] - arg[0] * arg[0]);
+            //func = -Math.Cos(arg[0]) * Math.Cos(arg[1]) * Math.Exp(-((arg[0] - Math.PI) * (arg[0] - Math.PI) + (arg[1] - Math.PI) * (arg[1] - Math.PI)));
+            //func = Math.Sin(arg[0]) + Math.Sin(arg[1]) + Math.Sin(arg[2]);
+            //func = (arg[0] + 2 * arg[1] - 7) * (arg[0] + 2 * arg[1] - 7) + (arg[1] + 2 * arg[0] - 5) * (arg[1] + 2 * arg[0] - 5);
+            //func = 5 * (arg[0] - arg[1]) * (arg[0] - arg[1]) + (1 - arg[0]) * (1 - arg[0]);
+
+
+            //////double x = arg[0], y = arg[1], z = arg[2], u = arg[3], v = arg[4];
+            //////double p, s, t, q;
+            //////p = v * z / (1 - z) + u * (1 - v) / (1 - u);
+            //////s = -x * y * v / (1 - z) - (1 - v) / (1 - u);
+            //////t = x * v / (1 - z * z) + (1 - v) / (1 - u * u);
+            //////q = x * z * v / (1 - z * z) + u * (1 - v) / (1 - u * u);
+            //////func = 2 * p * s / (t + q) + v * y * (1 + z) / (1 - z) + (1 - v) * (1 + u) / (1 - u);
+            //////func = -s / (t + q);
+            
+            return func;
         }
-
-        double Fx(double[] x)
+        public double _Nelder_Mid(point[] smp, int X_LENGTH = 2)
         {
-            double y = 0;
-            y = (1 - x[0]) * (1 - x[0]) + 100 * (x[1] - x[0] * x[0]) * (x[1] - x[0] * x[0]);
-            //y = Math.Sin(x[0]) + Math.Sin(x[1]) + Math.Sin(x[2]);
+            int SMP_LENGTH = X_LENGTH + 1;
 
-            //// double x = x0[0], y = x0[1], z = x0[2], u = x0[3], v = x0[4];
-
-            //// double p, s, t, q;
-            //// p = v * z / (1 - z) + u * (1 - v) / (1 - u);
-            //// s = -x * y * v / (1 - z) - (1 - v) / (1 - u);
-            //// t = x * v / (1 - z * z) + (1 - v) / (1 - u * u);
-            //// q = x * z * v / (1 - z * z) + u * (1 - v) / (1 - u * u);
-
-            //// //double func;
-            //// //func = 2 * p * s / (t + q) + v * y * (1 + z) / (1 - z) + (1 - v) * (1 + u) / (1 - u);
-
-            ////// func = -s / (t + q);
-            //y = 5 * (x0[0] - x0[1]) * (x0[0] - x0[1]) + (1 - x0[0]) * (1 - x0[0]);
-            return y;
-        }
-        public double _Nelder_Mid(/*point[] smp*/)
-        {
-            point[] smp = new point[3];
-            smp[0].x = new double[2];
-            smp[1].x = new double[2];
-            smp[2].x = new double[2];
-
-            smp[0].x[0] = 10;
-            smp[0].x[1] = 9;
-
-            smp[1].x[0] = 10;
-            smp[1].x[1] = -2;
-
-            smp[2].x[0] = 21;
-            smp[2].x[1] = 1;
-            double[] xh = new double[2], xg = new double[2], xl = new double[2], xr = new double[2], xe = new double[2], xs = new double[2], xc = new double[2], tmpV = new double[2];
-            double fh, fg, fl = 0, fr, fe, fs, tmpD;
+            double[] xh = new double[X_LENGTH],
+                     xg = new double[X_LENGTH],
+                     xl = new double[X_LENGTH],
+                     xr = new double[X_LENGTH],
+                     xe = new double[X_LENGTH],
+                     xs = new double[X_LENGTH],
+                     xc = new double[X_LENGTH]; 
+            double fh, fg, fl = 0, fr, fe, fs;
             double alpha = 1, beta = 0.5, gamma = 2;
             bool flag;
-            for (int i = 0; i < smp.Length; i++)
+            for (int i = 0; i < SMP_LENGTH; i++)
                 smp[i].f = Fx(smp[i].x);
 
             int K = 0;
 
 
-                while (K < 1000)
+            do
+            {
+                K++;
+                Array.Sort(smp, new Comparison<point>((a, b) => a.f.CompareTo(b.f)));
+                for (int i = 0; i < X_LENGTH; i++)
                 {
-                    K++;
-                    Array.Sort(smp, new Comparison<point>((a, b) => a.f.CompareTo(b.f)));
-                    for (int i = 0; i < xc.Length; i++)
-                        xh[i] = smp[smp.Length - 1].x[i];
-                    for (int i = 0; i < xc.Length; i++)
-                        xg[i] = smp[smp.Length - 2].x[i];
-                    for (int i = 0; i < xc.Length; i++)
-                        xl[i] = smp[0].x[i];
+                    xh[i] = smp[SMP_LENGTH - 1].x[i];
+                    xg[i] = smp[SMP_LENGTH - 2].x[i];
+                    xl[i] = smp[0].x[i];
+                }
 
+                fh = smp[SMP_LENGTH - 1].f;
+                fg = smp[SMP_LENGTH - 2].f;
+                fl = smp[0].f;
+                //2
+                for (int i = 0; i < X_LENGTH; i++)
+                    xc[i] = 0;
+                for (int i = 0; i < SMP_LENGTH - 1; i++)
+                {
+                    for (int j = 0; j < X_LENGTH; j++)
+                        xc[j] += smp[i].x[j];
 
-                    fh = smp[smp.Length - 1].f;
-                    fg = smp[smp.Length - 2].f;
-                    fl = smp[0].f;
-                    //2
-                    for (int i = 0; i < xc.Length; i++)
-                        xc[i] = 0;
-                    for (int i = 0; i < smp.Length - 1; i++)
+                }
+                for (int i = 0; i < X_LENGTH; i++)
+                    xc[i] /= (SMP_LENGTH - 1);
+
+                //3
+                for (int i = 0; i < X_LENGTH; i++)
+                {
+                    xr[i] = xc[i] * (1 + alpha) - xh[i] * alpha;
+                }
+                fr = Fx(xr);
+
+                //4
+                if (fr <= fl)
+                {
+                    //4a
+                    for (int i = 0; i < X_LENGTH; i++)
                     {
-                        for (int j = 0; j < xc.Length; j++)
-                            xc[j] += smp[i].x[j];
+                        xe[i] = xc[i] * (1 - gamma) + xr[i] * gamma;
 
                     }
-                    for (int i = 0; i < xc.Length; i++)
-                        xc[i] /= (smp.Length - 1);
-                    //3
-                    for (int i = 0; i < xc.Length; i++)
+                    fe = Fx(xe);
+                    if (fe < fr)
                     {
-                        xr[i] = xc[i] * (1 + alpha) - xh[i] * alpha;
+                        for (int i = 0; i < X_LENGTH; i++)
+                        {
+                            smp[SMP_LENGTH - 1].x[i] = xe[i];
+
+                        }
+                        smp[SMP_LENGTH - 1].f = fe;
                     }
-                    fr = Fx(xr);
-                    //4
-                    if (fr <= fl)
+                    else
                     {
-                        //4a
-                        for (int i = 0; i < xc.Length; i++)
+                        for (int i = 0; i < X_LENGTH; i++)
                         {
-                            xe[i] = xc[i] * (1 - gamma) + xr[i] * gamma;
+                            smp[SMP_LENGTH - 1].x[i] = xr[i];
 
                         }
-                        fe = Fx(xe);
-                        if (fe < fl)
-                        {
-                            for (int i = 0; i < xc.Length; i++)
-                            {
-                                smp[smp.Length - 1].x[i] = xe[i];
+                        smp[SMP_LENGTH - 1].f = fr;
+                    }
 
-                            }
-                            smp[smp.Length - 1].f = fe;
-                        }
-                        else
-                        {
-                            for (int i = 0; i < xc.Length; i++)
-                            {
-                                smp[smp.Length - 1].x[i] = xr[i];
-
-                            }
-                            smp[smp.Length - 1].f = fr;
-                        }
+                }
+                if (fl < fr && fr <= fg)
+                {
+                    //4b
+                    for (int i = 0; i < X_LENGTH; i++)
+                    {
+                        smp[SMP_LENGTH - 1].x[i] = xr[i];
 
                     }
-                    if (fl < fr && fr <= fg)
+                    smp[SMP_LENGTH - 1].f = fr;
+                }
+                flag = false;
+                if (fh >= fr && fr > fg)
+                {
+                    //4c
+                    flag = true;
+                    //tmpD = fh;
+                    for (int i = 0; i < X_LENGTH; i++)
                     {
-                        //4b
-                        for (int i = 0; i < xc.Length; i++)
-                        {
-                            smp[smp.Length - 1].x[i] = xr[i];
+                        //tmpV[i] = xh[i];
+                        smp[SMP_LENGTH - 1].x[i] = xr[i];
 
-                        }
-                        smp[smp.Length - 1].f = fr;
+                        //xr[i] = tmpV[i];//
+                        xr[i] = xh[i];//
                     }
-                    flag = false;
-                    if (fh >= fr && fr > fg)
+
+
+                    smp[SMP_LENGTH - 1].f = fr;
+
+                    //fr = tmpD;
+                    fr = fh;
+                }
+                //4d
+                if (fr > fh) flag = true;
+
+                if (flag)
+                {
+                    //5
+                    for (int i = 0; i < X_LENGTH; i++)
                     {
-                        //4c
-                        flag = true;
-                        tmpD = fh;
-                        for (int i = 0; i < xc.Length; i++)
-                        {
-                            tmpV[i] = xh[i];
-
-                        }
-
-                        for (int i = 0; i < xc.Length; i++)
-                        {
-                            smp[smp.Length - 1].x[i] = xr[i];
-
-                        }
-                        smp[smp.Length - 1].f = fr;
-                        for (int i = 0; i < xc.Length; i++)
-                        {
-                            xr[i] = tmpV[i];
-
-                        }
-                        fr = tmpD;
+                        xs[i] = xh[i] * beta + xc[i] * (1 - beta);
                     }
-                    //4d
-                    if (fr > fh) flag = true;
-
-                    if (flag)
+                    fs = Fx(xs);
+                    if (fs < fh)
                     {
-                        //5
-                        for (int i = 0; i < xc.Length; i++)
+                        //6
+                        //tmpD = fh;
+                        for (int i = 0; i < X_LENGTH; i++)
                         {
-                            xs[i] = xh[i] * beta + xc[i] * (1 - beta);
-                        }
-                        fs = Fx(xs);
-                        if (fs < fh)
-                        {
-                            //6
-                            tmpD = fh;
-                            for (int i = 0; i < xc.Length; i++)
-                            {
-                                tmpV[i] = xh[i];
-
-                            }
-                            for (int i = 0; i < xc.Length; i++)
-                            {
-                                smp[smp.Length - 1].x[i] = xs[i];
-
-                            }
-                            smp[smp.Length - 1].f = fs;
-                            for (int i = 0; i < xc.Length; i++)
-                            {
-                                xs[i] = tmpV[i];
-
-                            }
-                            fs = tmpD;
+                            //tmpV[i] = xh[i];
+                            smp[SMP_LENGTH - 1].x[i] = xs[i];//
+                            //xs[i] = tmpV[i];//
+                            xs[i] = xh[i];
 
                         }
-                        else
-                        {
-                            //7
-                            for (int i = 0; i < smp.Length; i++)
-                                for (int j = 0; j < xc.Length; j++)
-                                    smp[i].x[j] = xl[j] + (smp[i].x[j] - xl[j]) / 2;
-                        }
+                        smp[SMP_LENGTH - 1].f = fs;
+                        fs = fh;
+                        //fs = tmpD;
+
+                    }
+                    else
+                    {
+                        //7
+                        for (int i = 0; i < SMP_LENGTH; i++)
+                            for (int j = 0; j < X_LENGTH; j++)
+                                smp[i].x[j] = xl[j] + (smp[i].x[j] - xl[j]) / 2;
+                                //smp[i].x[j] = xl[j] = xl[j] + (smp[i].x[j] - xl[j]) / 2;
                     }
                 }
+
+                
+                
+            }
+            while (K < 1000 /*&& Math.Abs(fl) >= 1e-30*/);
+            fl = Fx(xl);
             return fl;
         }
     }
