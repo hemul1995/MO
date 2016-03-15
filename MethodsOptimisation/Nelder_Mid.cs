@@ -11,13 +11,14 @@ namespace MethodsOptimisation
         public double f;
         public double[] x;
     }
+
     class Nelder_Mid
     {
         int CC = 0;
         
         
         
-        public double _Nelder_Mid(point[] smp, int X_LENGTH = 2)
+        public void _Nelder_Mid(point[] smp, int X_LENGTH = 2)
         {
             int SMP_LENGTH = X_LENGTH + 1;
             Fx.CC = 0;
@@ -173,8 +174,12 @@ namespace MethodsOptimisation
                 
             }
             while (K < 1000 /*&& Math.Abs(fl) >= 1e-30*/);
+
             fl = Fx.Func(xl);
-            return fl;
+
+            Fx.f = fl;
+            Fx.x = xl;
+            //return fl;
         }
     }
 }

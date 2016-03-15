@@ -119,7 +119,12 @@ namespace MethodsOptimisation
             //smp[5].x[4] = 1;
             nd._Nelder_Mid(smp);//2
             //ss.Gauss(x0);
-            textBox1.Text = "" + ss._Gauss(x0);
+            textBox1.Text = "Значение функции:\r\n" + Fx.f + "\r\n";
+            textBox1.Text += "В точке:\r\n";// + Fx.f + "\n";
+            foreach(double c in Fx.x)
+            {
+                textBox1.Text += c + "\r\n";// + Fx.f + "\n";
+            }
             //textBox2.Text = "" + test.f;
         }
     }

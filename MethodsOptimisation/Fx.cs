@@ -8,6 +8,9 @@ namespace MethodsOptimisation
 {
     static class Fx
     {
+        public static double f;
+        public static double[] x;
+
         public static int CC;
 
         public static double Func(double[] arg)
