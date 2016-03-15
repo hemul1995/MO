@@ -8,7 +8,6 @@ namespace MethodsOptimisation
 {
     class Gauss
     {
-
         double[] A = new double[5] { 2, 0.1, 0.1, 0.1, 0 };
         double[] B = new double[5] { 100, 2, 0.45, 0.45, 1 };
         public double getMinDih(double[] x0, int index, double a, double b, double eps)
