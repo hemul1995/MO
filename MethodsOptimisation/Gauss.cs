@@ -20,9 +20,9 @@ namespace MethodsOptimisation
             {
                 x0[index] = (a + b) / 2;
                 x0[index] -= eps;
-                f1 = Fx(x0);
+                f1 = Fx.Func(x0);
                 x0[index] += 2 * eps;
-                f2 = Fx(x0);
+                f2 = Fx.Func(x0);
 
                 if (f1 < f2)
                     b = x0[index];
@@ -47,18 +47,18 @@ namespace MethodsOptimisation
             {
 
                 x[index] = tmp + h;
-                f1 = Fx(x);
+                f1 = Fx.Func(x);
                 x[index] = tmp - h;
-                f2 = Fx(x);
+                f2 = Fx.Func(x);
 
 
                 p1 = (f1 - f2) / (2 * h);
                 h /= 2;
 
                 x[index] = tmp + h;
-                f1 = Fx(x);
+                f1 = Fx.Func(x);
                 x[index] = tmp - h;
-                f2 = Fx(x);
+                f2 = Fx.Func(x);
                 x[index] = tmp;
 
                 p2 = (f1 - f2) / (2 * h);
@@ -80,11 +80,11 @@ namespace MethodsOptimisation
                 
                 
                 x[index] = tmp + h;
-                f1 = Fx(x);
+                f1 = Fx.Func(x);
                 x[index] = tmp - h;
-                f2 = Fx(x);
+                f2 = Fx.Func(x);
                 x[index] = tmp ;
-                f3 = Fx(x);
+                f3 = Fx.Func(x);
 
                 p1 = (f1 + f2 - 2 * f3) / (h * h);
                 h /= 2;
@@ -92,9 +92,9 @@ namespace MethodsOptimisation
 
 
                 x[index] = tmp + h;
-                f1 = Fx(x);
+                f1 = Fx.Func(x);
                 x[index] = tmp - h;
-                f2 = Fx(x);
+                f2 = Fx.Func(x);
                 x[index] = tmp;
 
                 p2 = (f1 + f2 - 2 * f3) / (h * h);
@@ -121,9 +121,9 @@ namespace MethodsOptimisation
             int n = 0;
             
             x0[index] = x1;
-            double f1 = Fx(x0);
+            double f1 = Fx.Func(x0);
             x0[index] = x2;
-            double f2 = Fx(x0);
+            double f2 = Fx.Func(x0);
             x0[index] = tmp;
             while (Math.Abs(x2 - x1) > dx && (f2 - f1) != 0 && n < 100000)
             {
@@ -145,29 +145,11 @@ namespace MethodsOptimisation
 
 
 
-        double Fx(double[] x0)
+
+        public void _Gauss(double[] x0)
         {
-            double y = 0;
-            //y = (1 - x[0]) * (1 - x[0]) + 100 * (x[1] - x[0] * x[0]) * (x[1] - x[0] * x[0]);
-            //y = Math.Sin(x[0]) + Math.Sin(x[1]) + Math.Sin(x[2]);
+            Fx.CC = 0;
 
-           //// double x = x0[0], y = x0[1], z = x0[2], u = x0[3], v = x0[4];
-
-           //// double p, s, t, q;
-           //// p = v * z / (1 - z) + u * (1 - v) / (1 - u);
-           //// s = -x * y * v / (1 - z) - (1 - v) / (1 - u);
-           //// t = x * v / (1 - z * z) + (1 - v) / (1 - u * u);
-           //// q = x * z * v / (1 - z * z) + u * (1 - v) / (1 - u * u);
-
-           //// //double func;
-           //// //func = 2 * p * s / (t + q) + v * y * (1 + z) / (1 - z) + (1 - v) * (1 + u) / (1 - u);
-
-           ////// func = -s / (t + q);
-            y = 5 * (x0[0] - x0[1]) * (x0[0] - x0[1]) + (1 - x0[0]) * (1 - x0[0]);
-            return y;
-        }
-        public double _Gauss(double[] x0)
-        {
             int K = 0;
             double[] x1 = new double[x0.Length];
             for(int i = 0; i<x0.Length; i++)
@@ -185,7 +167,7 @@ namespace MethodsOptimisation
                 {
                     norm += (x1[i] - x0[i]) * (x1[i] - x0[i]);
                 }
-                if (Math.Abs(Fx(x1) - Fx(x0)) <= 1e-10 && norm <= 1e-10)
+                if (Math.Abs(Fx.Func(x1) - Fx.Func(x0)) <= 1e-10 && norm <= 1e-10)
                 {
                     break;
                 }
@@ -199,7 +181,9 @@ namespace MethodsOptimisation
             }
             while(K < 100000);
 
-            return Fx(x1);
+            Fx.f = Fx.Func(x1);
+            Fx.x = x1;
+            
         }
     }
 }
