@@ -36,7 +36,7 @@ namespace MethodsOptimisation
                 smp[i].f =Fx.Func(smp[i].x);
 
             int K = 0;
-
+            double sf = 0;
 
             do
             {
@@ -170,10 +170,20 @@ namespace MethodsOptimisation
                     }
                 }
 
-                
+                sf = 0;
+                double sr = 0;
+                for (int i = 0; i < SMP_LENGTH; i++)
+                    sr += smp[i].f;
+                sr /= SMP_LENGTH;
+                for (int i = 0; i < SMP_LENGTH; i++)
+                    sf += (smp[i].f * smp[i].f - sr) * (smp[i].f * smp[i].f - sr);
+                sf /= SMP_LENGTH;
+                sr = 0;
+                    
+
                 
             }
-            while (K < 1000 /*&& Math.Abs(fl) >= 1e-30*/);
+            while (K < 1000 && sf >= 1e-30);
 
             fl = Fx.Func(xl);
 
