@@ -87,6 +87,7 @@
     <Compile Include="Fx.cs" />
     <Compile Include="Gauss.cs" />
     <Compile Include="Nelder_Mid.cs" />
+    <Compile Include="Newton-Raffson.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="singleSearch.cs" />
