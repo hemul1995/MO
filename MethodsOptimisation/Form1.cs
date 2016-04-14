@@ -127,10 +127,10 @@ namespace MethodsOptimisation
             //Newton_Raffson r = new Newton_Raffson();
             //r._Newton_Raffson(x0);
             double[] x0 = new double[2];
-            x0[0] = 0;
+            x0[0] = 1;
             x0[1] = 1;
             Fletcher_Rivz fffff = new Fletcher_Rivz();
-            fffff._Fletcher_Rivz(x0, 1e-2);
+            fffff._Fletcher_Rivz(x0, 1e-8);
 
             //ss.Gauss(x0);
             textBox1.Text = "Значение функции:\r\n" + Fx.f + "\r\n";
