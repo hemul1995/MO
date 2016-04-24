@@ -39,12 +39,11 @@ namespace MethodsOptimisation
         private double getDerivate1(double[] x, int index)
         {
             double eps = 1e-10;
-            double h = 1, p1, p2, p;
+            double h = 1e-5, p1, p2, p;
             double tmp = x[index];
             double f1, f2;
 
-            do
-            {
+
 
                 x[index] = tmp + h;
                 f1 = Fx.Func(x);
@@ -53,18 +52,9 @@ namespace MethodsOptimisation
 
 
                 p1 = (f1 - f2) / (2 * h);
-                h /= 2;
+               
 
-                x[index] = tmp + h;
-                f1 = Fx.Func(x);
-                x[index] = tmp - h;
-                f2 = Fx.Func(x);
-                x[index] = tmp;
-
-                p2 = (f1 - f2) / (2 * h);
-            }
-            while (p1 != p2 && h * h > eps * Math.Abs(x[index]));
-            p = p2;
+            p = p1;
             x[index] = tmp;
             return p;
         }
@@ -72,11 +62,10 @@ namespace MethodsOptimisation
         private double getDerivate2(double[] x, int index)
         {
             double eps = 1e-10;
-            double h = 1, p1, p2, p;
+            double h = 1e-5, p1, p2, p;
             double tmp = x[index];
             double f1, f2, f3;
-            do
-            {
+
                 
                 
                 x[index] = tmp + h;
@@ -87,20 +76,8 @@ namespace MethodsOptimisation
                 f3 = Fx.Func(x);
 
                 p1 = (f1 + f2 - 2 * f3) / (h * h);
-                h /= 2;
-
-
-
-                x[index] = tmp + h;
-                f1 = Fx.Func(x);
-                x[index] = tmp - h;
-                f2 = Fx.Func(x);
-                x[index] = tmp;
-
-                p2 = (f1 + f2 - 2 * f3) / (h * h);
-            }
-            while (p1 != p2 && h * h > eps * Math.Abs(x[index]));
-            p = p2;
+               
+            p = p1;
             x[index] = tmp;
             return p;
         }
@@ -125,7 +102,7 @@ namespace MethodsOptimisation
             x0[index] = x2;
             double f2 = Fx.Func(x0);
             x0[index] = tmp;
-            while (Math.Abs(x2 - x1) > dx && (f2 - f1) != 0 && n < 100000)
+            while (Math.Abs(x2 - x1) > dx && (f2 - f1) != 0 && n < 10000)
             {
                 n++;
                 x1 = x2;
@@ -143,7 +120,52 @@ namespace MethodsOptimisation
 
         }
 
+        public double goldenSection(double[] x, double a, double b, int index, double eps)
+        {
+            double tmp = x[index];
+            double T1, T2;
+            T1 = 0.381966;
+            T2 = 1 - T1;
 
+            do
+            {
+                double x1, x2;
+                x1 = a + (b - a) * T1;
+                x2 = a + (b - a) * T2;
+                x[index] = (x1 + x2) / 2;
+                double F1, F2;
+                x[index] -= eps;
+                F1 = Fx.Func(x);
+                x[index] += 2 * eps;
+                F2 = Fx.Func(x);
+
+                if (F1 < F2)
+                {
+                    b = x2;
+                    x2 = x1;
+                    F2 = F1;
+                    x1 = a + (b - a) * T1;
+                    x[index] = x1;
+                    F1 = Fx.Func(x);
+                }
+                else
+                {
+                    a = x1;
+                    x1 = x2;
+                    F1 = F2;
+
+                    x2 = a + (b - a) * T2;
+                    x[index] = x2; ;
+                    F2 = Fx.Func(x);
+                }
+            }
+            while (Math.Abs(b - a) > eps);
+
+            double res = (a + b) / 2;
+            x[index] = tmp;
+            return res;
+
+        }
 
 
         public void _Gauss(double[] x0)
@@ -160,8 +182,9 @@ namespace MethodsOptimisation
             {
                 K++;
                 for (int i = 0; i < x0.Length; i++)
-                    //x1[i] = getMinDih(x0, i, A[i]+10, B[i]-10, 1e-5);
-                    x1[i] = getMinParabol(x1, 1e-10, i);
+                    x1[i] = goldenSection(x0, -30, 30, i, 1e-8);
+                    //x1[i] = getMinDih(x0, i, -20, 30, 1e-5);
+                    //x1[i] = getMinParabol(x0, 1e-10, i);
                 double norm = 0;
                 for(int i = 0; i<x0.Length; i++)
                 {

@@ -34,7 +34,7 @@ namespace MethodsOptimisation
 
             /**
              * Three-hump camel function:
-             * (1, 3) -> 0
+             * (0, 0) -> 0
             **/
             func = 2 * arg[0] * arg[0] - 1.05 * Math.Pow(arg[0], 4) + Math.Pow(arg[0], 6) / 6 + arg[0] * arg[1] + arg[1] * arg[1];
 

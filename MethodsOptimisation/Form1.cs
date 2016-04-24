@@ -121,18 +121,21 @@ namespace MethodsOptimisation
             //smp[5].x[3] = 0.45;
             //smp[5].x[4] = 1;
             //nd._Nelder_Mid(smp);//2
-            //double[] x0 = new double[2];
-            //x0[0] = 5;
-            //x0[1] = 5;
-            //Newton_Raffson r = new Newton_Raffson();
-            //r._Newton_Raffson(x0);
             double[] x0 = new double[2];
-            x0[0] = 1;
-            x0[1] = 1;
-            Fletcher_Rivz fffff = new Fletcher_Rivz();
-            fffff._Fletcher_Rivz(x0, 1e-8);
-
+            x0[0] = 5;
+            x0[1] = 5;
+            Newton_Raffson r = new Newton_Raffson();
+            r._Newton_Raffson(x0);
+            //double[] x0 = new double[2];
+            //x0[0] = 15;
+            //x0[1] = 15;
+            ////Fletcher_Rivz fffff = new Fletcher_Rivz();
+            ////fffff._Fletcher_Rivz(x0, 1e-8);
+            //Gauss g = new Gauss();
+            //g._Gauss(x0);
             //ss.Gauss(x0);
+            
+            
             textBox1.Text = "Значение функции:\r\n" + Fx.f + "\r\n";
             textBox1.Text += "В точке:\r\n";// + Fx.f + "\n";
             foreach(double c in Fx.x)
