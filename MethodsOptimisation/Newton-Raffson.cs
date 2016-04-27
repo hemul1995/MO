@@ -121,6 +121,7 @@ namespace MethodsOptimisation
 
         public void _Newton_Raffson(double[] x, double eps1 = 1e-7, double eps2 = 1e-7)
         {
+            Fx.CC = 0;
             int MAXITER = 10000;
             int LENGTH = x.Length;
             double[] grad = new double[LENGTH];

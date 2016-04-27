@@ -24,7 +24,7 @@ namespace MethodsOptimisation
              * Rosenbrock function
              * (1, 1) -> 0
             **/
-           // func = (1 - arg[0]) * (1 - arg[0]) + 100 * (arg[1] - arg[0] * arg[0]) * (arg[1] - arg[0] * arg[0]);
+            func = (1 - arg[0]) * (1 - arg[0]) + 100 * (arg[1] - arg[0] * arg[0]) * (arg[1] - arg[0] * arg[0]);
 
             /**
              * Booth's function

@@ -78,6 +78,7 @@ namespace MethodsOptimisation
         
         public void _Fletcher_Rivz(double[] x, double eps1 = 1e-5, double eps2 = 1e-5)
         {
+            Fx.CC = 0;
             const int MAXITER = 10000;
             int LENGTH = x.Length;
             double tk;
