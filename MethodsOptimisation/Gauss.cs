@@ -182,7 +182,7 @@ namespace MethodsOptimisation
             {
                 K++;
                 for (int i = 0; i < x0.Length; i++)
-                    x1[i] = goldenSection(x0, -30, 30, i, 1e-8);
+                    x1[i] = goldenSection(x1, -100, 100, i, 1e-8);
                     //x1[i] = getMinDih(x0, i, -20, 30, 1e-5);
                     //x1[i] = getMinParabol(x0, 1e-10, i);
                 double norm = 0;

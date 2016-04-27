@@ -122,8 +122,8 @@ namespace MethodsOptimisation
             //smp[5].x[4] = 1;
             //nd._Nelder_Mid(smp);//2
             double[] x0 = new double[2];
-            x0[0] = 5;
-            x0[1] = 5;
+            x0[0] = 2;
+            x0[1] = 2;
             Newton_Raffson r = new Newton_Raffson();
             r._Newton_Raffson(x0);
             //double[] x0 = new double[2];
@@ -145,20 +145,61 @@ namespace MethodsOptimisation
             textBox1.Text += "Кол-во итераций функции:\r\n" + Fx.CC;// + Fx.f + "\n";
             //textBox2.Text = "" + test.f;
         }
+        public double goldenSection(double[] x, double a, double b, int index, double eps)
+        {
+            double tmp = x[index];
+            double T1, T2;
+            T1 = 0.381966;
+            T2 = 1 - T1;
 
+            do
+            {
+                double x1, x2;
+                x1 = a + (b - a) * T1;
+                x2 = b - (b - a) * T1;
+                x[index] = (x1 + x2) / 2;
+                double F1, F2;
+                x[index] = x1;
+                F1 = Fx.Func(x);
+                x[index] = x2;
+                F2 = Fx.Func(x);
+
+                if (F1 < F2)
+                {
+                    b = x2;
+                    if (Math.Abs(b - a) < eps) break; 
+                    x2 = x1;
+                    F2 = F1;
+                    x1 = a + (b - a) * T1;
+                    x[index] = x1;
+                    F1 = Fx.Func(x);
+                }
+                else
+                {
+                    a = x1;
+                    if (Math.Abs(b - a) < eps) break; 
+                    x1 = x2;
+                    F1 = F2;
+
+                    x2 = b - (b - a) * T1;
+                    x[index] = x2; ;
+                    F2 = Fx.Func(x);
+                }
+            }
+            while (true);
+
+            double res = (a + b) / 2;
+            x[index] = tmp;
+
+            return res;
+
+        }
         private void button2_Click(object sender, EventArgs e)
         {
-            Matrix<double> d = DenseMatrix.OfArray(new double[,]{
-                {1, 1, 1},
-                {0, 2, 2},
-                {0, 0, 3}
-            });
-
-            Matrix<double> d1 = d;
-            //d1.Multiply(
-
-
-            double aa = d1[2, 0];
+            for(int i = 0; i < 2; i++)
+            {
+                double t = goldenSection(new double[] { 0, 0 }, -30, 30, i, 1e-5);
+            }
 
         }
     }
