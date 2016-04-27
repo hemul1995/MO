@@ -14,14 +14,41 @@ namespace MethodsOptimisation
 
     class Nelder_Mid
     {
-        int CC = 0;
         
         
         
-        public void _Nelder_Mid(point[] smp, int X_LENGTH = 2)
+        public void _Nelder_Mid(double[] x, int X_LENGTH = 2)
         {
+
+
             int SMP_LENGTH = X_LENGTH + 1;
-            Fx.CC = 0;
+            point[] smp = new point[SMP_LENGTH];
+            for(int i = 0; i < SMP_LENGTH; i++)
+            {
+                smp[i].x = new double[X_LENGTH];
+            }
+            double r1, r2;
+            r1 = (Math.Sqrt(SMP_LENGTH) + X_LENGTH - 1) / (X_LENGTH * Math.Sqrt(2));
+            r2 = (Math.Sqrt(SMP_LENGTH) - 1) / (X_LENGTH * Math.Sqrt(2));
+            for (int i = 0; i < X_LENGTH; i++ )
+            {
+                smp[0].x[i] = x[i];
+                for(int j = 1; j < SMP_LENGTH; j++)
+                {
+                    if(j - 1 == i)
+                    {
+                        smp[j].x[i] = x[i] + r1;
+                    }
+                    else
+                    {
+                        smp[j].x[i] = x[i] + r2;
+                    }
+                }
+            }
+
+
+
+                Fx.CC = 0;
             double[] xh = new double[X_LENGTH],
                      xg = new double[X_LENGTH],
                      xl = new double[X_LENGTH],

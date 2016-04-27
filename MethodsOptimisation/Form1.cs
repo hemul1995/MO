@@ -26,11 +26,11 @@ namespace MethodsOptimisation
         private void button1_Click(object sender, EventArgs e)
         {
 
-            double[] x0 = new double[2];
-            x0[0] = 2;
-            x0[1] = 2;
-            Newton_Raffson r = new Newton_Raffson();
-            r._Newton_Raffson(x0);
+            //double[] x0 = new double[2];
+            //x0[0] = 2;
+            //x0[1] = 2;
+            //Newton_Raffson r = new Newton_Raffson();
+            //r._Newton_Raffson(x0);
 
             //double[] x0 = new double[2];
             //x0[0] = 5;
@@ -41,7 +41,12 @@ namespace MethodsOptimisation
             //Gauss g = new Gauss();
             //g._Gauss(x0);
             //ss.Gauss(x0);
-            
+
+            double[] x0 = new double[2];
+            x0[0] = 5;
+            x0[1] = 5;
+            Nelder_Mid n = new Nelder_Mid();
+            n._Nelder_Mid(x0);
             
             textBox1.Text = "Значение функции:\r\n" + Fx.f + "\r\n";
             textBox1.Text += "В точке:\r\n";// + Fx.f + "\n";
