@@ -27,7 +27,7 @@ namespace MethodsOptimisation
         public double goldenSection(double[] x, double[] dk, double a, double b, double eps)
         {
             //double tmp = x[index];
-            double T1, T2;
+            double T1;
             T1 = 0.381966;
             //T2 = 1 - T1;
             double[] tmpMass = new double[x.Length];
