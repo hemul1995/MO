@@ -171,7 +171,6 @@ namespace MethodsOptimisation
         public void _Gauss(double[] x0)
         {
             Fx.CC = 0;
-
             int K = 0;
             double[] x1 = new double[x0.Length];
             for(int i = 0; i<x0.Length; i++)

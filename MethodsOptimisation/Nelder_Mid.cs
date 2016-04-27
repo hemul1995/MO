@@ -45,10 +45,7 @@ namespace MethodsOptimisation
                     }
                 }
             }
-
-
-
-                Fx.CC = 0;
+            Fx.CC = 0;
             double[] xh = new double[X_LENGTH],
                      xg = new double[X_LENGTH],
                      xl = new double[X_LENGTH],
