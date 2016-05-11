@@ -10,16 +10,16 @@ namespace MethodsOptimisation
     {
         public static double f;
         public static double[] x;
-
+        public static Dictionary<double, double> kash = new Dictionary<double, double>();
         public static int CC;
-
-        public static double Func(double[] arg)
+        public static double P = 0;
+        public static double Func(double[] arg, double r = 0)
         {
 
-            CC++;
+            P = 0;
             double func;
-            //double y = 0;
-            //func = arg[0] * arg[0] + arg[1] * arg[1];
+            CC++;
+
             /**
              * Rosenbrock function
              * (1, 1) -> 0
@@ -30,7 +30,7 @@ namespace MethodsOptimisation
              * Booth's function
              * (1, 3) -> 0
             **/
-           //func = (arg[0] + 2 * arg[1] - 7) * (arg[0] + 2 * arg[1] - 7) + (2 * arg[0] + arg[1] - 5) * (2 * arg[0] + arg[1] - 5);
+            //func = (arg[0] + 2 * arg[1] - 7) * (arg[0] + 2 * arg[1] - 7) + (2 * arg[0] + arg[1] - 5) * (2 * arg[0] + arg[1] - 5);
 
             /**
              * Three-hump camel function:
@@ -43,9 +43,28 @@ namespace MethodsOptimisation
              * (3, 0.5) -> 0
             **/
             //func = (1.5 - arg[0] + arg[0] * arg[1]) * (1.5 - arg[0] + arg[0] * arg[1]) + (2.25 - arg[0] + arg[0] * arg[1] * arg[1]) * (2.25 - arg[0] + arg[0] * arg[1] * arg[1]) + (2.625 - arg[0] + arg[0] * arg[1] * arg[1] * arg[1]) * (2.625 - arg[0] + arg[0] * arg[1] * arg[1] * arg[1]);
-            
-            
-            
+
+
+
+
+            //Штрафные ограничения вида P(x, r) <- r/2 * [Σg(x) + ΣMax(0, _g(x))];
+            //(-0.5 -0.5 ) -> 0.5
+            if (r != 0)
+                //P = r / 2 * ((Math.Max(0, 1.2 - arg[0]) * Math.Max(0, 1.2 - arg[0])) + (Math.Max(0, 1.2 - arg[1]) * Math.Max(0, 1.2 - arg[1])) + (Math.Max(0, arg[0] - 2) * Math.Max(0, arg[0] - 2)) + (Math.Max(0, arg[1] - 2) * Math.Max(0, arg[1] - 2)));
+                //P = r / 2 * ((Math.Max(0, -arg[0] - 1) * Math.Max(0, -arg[0] -1)) + (Math.Max(0, -arg[1] -1) * Math.Max(0, -arg[1] - 1)) + (Math.Max(0, arg[0] - 0.9) * Math.Max(0, arg[0] - 0.9)) + (Math.Max(0, arg[1] - 0.9) * Math.Max(0, arg[1] - 0.9)));
+                P = r / 2 * ((Math.Max(0, -arg[0]) * Math.Max(0, -arg[0])) + (Math.Max(0, -arg[1]) * Math.Max(0, -arg[1])) + (Math.Max(0, arg[0] - 0.1) * Math.Max(0, arg[0] - 0.1)) + (Math.Max(0, arg[1] - 0.1) * Math.Max(0, arg[1] - 0.1)));
+                //P = r / 2 * (Math.Max(0, arg[0] + arg[1] + 1) * Math.Max(0, arg[0] + arg[1] + 1));
+
+            //Барьерные ограничения вида P(x, r) <- -r * Σ1/_g(x);
+            //(-0.5 -0.5 ) -> 0.5
+            //if(r != 0)
+            //P = -r * (1 / (1.2 - arg[0]) + 1 / (1.2 - arg[1]) + 1 / (arg[0] - 2) + 1 / (arg[1] - 2));
+
+            //Барьерные ограничения вида P(x, r) <- -r * Σln(-_g(x));
+            //(-0.5 -0.5 ) -> 0.5
+            //if (r != 0)
+            //P = -r * Math.Log(arg[0] + arg[1] + 1);
+            func += P;
 
             //////double x = arg[0], y = arg[1], z = arg[2], u = arg[3], v = arg[4];
             //////double p, s, t, q;
@@ -55,9 +74,10 @@ namespace MethodsOptimisation
             //////q = x * z * v / (1 - z * z) + u * (1 - v) / (1 - u * u);
             //////func = 2 * p * s / (t + q) + v * y * (1 + z) / (1 - z) + (1 - v) * (1 + u) / (1 - u);
             //////func = -s / (t + q);
-
+            if (func == Double.PositiveInfinity) func = Double.MaxValue;
+            if (func == Double.NegativeInfinity) func = -Double.MaxValue;
             return func;
         }
-            
+
     }
 }
