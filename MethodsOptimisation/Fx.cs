@@ -50,10 +50,15 @@ namespace MethodsOptimisation
             //Штрафные ограничения вида P(x, r) <- r/2 * [Σg(x) + ΣMax(0, _g(x))];
             //(-0.5 -0.5 ) -> 0.5
             if (r != 0)
+
+            //(1.2 1.44 ) -> 0.04
                 //P = r / 2 * ((Math.Max(0, 1.2 - arg[0]) * Math.Max(0, 1.2 - arg[0])) + (Math.Max(0, 1.2 - arg[1]) * Math.Max(0, 1.2 - arg[1])) + (Math.Max(0, arg[0] - 2) * Math.Max(0, arg[0] - 2)) + (Math.Max(0, arg[1] - 2) * Math.Max(0, arg[1] - 2)));
+            //(0.9 0.81 ) -> 0.001    
                 //P = r / 2 * ((Math.Max(0, -arg[0] - 1) * Math.Max(0, -arg[0] -1)) + (Math.Max(0, -arg[1] -1) * Math.Max(0, -arg[1] - 1)) + (Math.Max(0, arg[0] - 0.9) * Math.Max(0, arg[0] - 0.9)) + (Math.Max(0, arg[1] - 0.9) * Math.Max(0, arg[1] - 0.9)));
-                P = r / 2 * ((Math.Max(0, -arg[0]) * Math.Max(0, -arg[0])) + (Math.Max(0, -arg[1]) * Math.Max(0, -arg[1])) + (Math.Max(0, arg[0] - 0.1) * Math.Max(0, arg[0] - 0.1)) + (Math.Max(0, arg[1] - 0.1) * Math.Max(0, arg[1] - 0.1)));
-                //P = r / 2 * (Math.Max(0, arg[0] + arg[1] + 1) * Math.Max(0, arg[0] + arg[1] + 1));
+            //(0.1 0.01 ) -> 0.81      
+                //P = r / 2 * ((Math.Max(0, -arg[0]) * Math.Max(0, -arg[0])) + (Math.Max(0, -arg[1]) * Math.Max(0, -arg[1])) + (Math.Max(0, arg[0] - 0.1) * Math.Max(0, arg[0] - 0.1)) + (Math.Max(0, arg[1] - 0.1) * Math.Max(0, arg[1] - 0.1)));
+                
+                P = r / 2 * (Math.Max(0, arg[0] + arg[1] + 1) * Math.Max(0, arg[0] + arg[1] + 1));
 
             //Барьерные ограничения вида P(x, r) <- -r * Σ1/_g(x);
             //(-0.5 -0.5 ) -> 0.5

@@ -90,11 +90,11 @@ namespace MethodsOptimisation
                     q._Penalty_Method(x0, i, j);
 
                     textBox1.Text += "Значение функции:\r\n" + Fx.f + " " + i + " " + j + "\r\n";
-                    //textBox1.Text += "В точке:\r\n";
-                    //foreach (double c in Fx.x)
-                    //{
-                    //    textBox1.Text += c + "\r\n";
-                    //}
+                    textBox1.Text += "В точке:\r\n";
+                    foreach (double c in Fx.x)
+                    {
+                        textBox1.Text += c + "\r\n";
+                    }
                     textBox1.Text += "Кол-во итераций функции:\r\n" + Fx.CC + "\r\n\r\n";
                 }
             }
