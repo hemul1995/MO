@@ -44,6 +44,14 @@ namespace MethodsOptimisation
             **/
             //func = (1.5 - arg[0] + arg[0] * arg[1]) * (1.5 - arg[0] + arg[0] * arg[1]) + (2.25 - arg[0] + arg[0] * arg[1] * arg[1]) * (2.25 - arg[0] + arg[0] * arg[1] * arg[1]) + (2.625 - arg[0] + arg[0] * arg[1] * arg[1] * arg[1]) * (2.625 - arg[0] + arg[0] * arg[1] * arg[1] * arg[1]);
 
+            double x = arg[0], y = arg[1], z = arg[2], u = arg[3], v = arg[4];
+            double p, s, t, q;
+            p = v * z / (1 - z) + u * (1 - v) / (1 - u);
+            s = -x * y * v / (1 - z) - (1 - v) / (1 - u);
+            t = x * v / (1 - z * z) + (1 - v) / (1 - u * u);
+            q = x * z * v / (1 - z * z) + u * (1 - v) / (1 - u * u);
+            func = 2 * p * s / (t + q) + v * y * (1 + z) / (1 - z) + (1 - v) * (1 + u) / (1 - u);//-0.25
+            //func = -s / (t + q);
 
 
 
@@ -52,13 +60,12 @@ namespace MethodsOptimisation
             if (r != 0)
 
             //(1.2 1.44 ) -> 0.04
+                P = r / 2 * (Math.Pow(Math.Max(0, 2 - arg[0]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[1]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[2]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[3]), 2) + Math.Pow(Math.Max(0, 0 - arg[4]), 2) + Math.Pow(Math.Max(0, arg[0] - 100), 2) + Math.Pow(Math.Max(0, arg[1] - 2), 2) + Math.Pow(Math.Max(0, arg[2] - 0.45), 2) + Math.Pow(Math.Max(0, arg[3] - 0.45), 2) + Math.Pow(Math.Max(0, arg[4] - 1), 2));
                 //P = r / 2 * ((Math.Max(0, 1.2 - arg[0]) * Math.Max(0, 1.2 - arg[0])) + (Math.Max(0, 1.2 - arg[1]) * Math.Max(0, 1.2 - arg[1])) + (Math.Max(0, arg[0] - 2) * Math.Max(0, arg[0] - 2)) + (Math.Max(0, arg[1] - 2) * Math.Max(0, arg[1] - 2)));
             //(0.9 0.81 ) -> 0.001    
                 //P = r / 2 * ((Math.Max(0, -arg[0] - 1) * Math.Max(0, -arg[0] -1)) + (Math.Max(0, -arg[1] -1) * Math.Max(0, -arg[1] - 1)) + (Math.Max(0, arg[0] - 0.9) * Math.Max(0, arg[0] - 0.9)) + (Math.Max(0, arg[1] - 0.9) * Math.Max(0, arg[1] - 0.9)));
-            //(0.1 0.01 ) -> 0.81      
                 //P = r / 2 * ((Math.Max(0, -arg[0]) * Math.Max(0, -arg[0])) + (Math.Max(0, -arg[1]) * Math.Max(0, -arg[1])) + (Math.Max(0, arg[0] - 0.1) * Math.Max(0, arg[0] - 0.1)) + (Math.Max(0, arg[1] - 0.1) * Math.Max(0, arg[1] - 0.1)));
-                
-                P = r / 2 * (Math.Max(0, arg[0] + arg[1] + 1) * Math.Max(0, arg[0] + arg[1] + 1));
+                //P = r / 2 * (Math.Max(0, arg[0] + arg[1] + 1) * Math.Max(0, arg[0] + arg[1] + 1));
 
             //Барьерные ограничения вида P(x, r) <- -r * Σ1/_g(x);
             //(-0.5 -0.5 ) -> 0.5
@@ -71,14 +78,7 @@ namespace MethodsOptimisation
             //P = -r * Math.Log(arg[0] + arg[1] + 1);
             func += P;
 
-            //////double x = arg[0], y = arg[1], z = arg[2], u = arg[3], v = arg[4];
-            //////double p, s, t, q;
-            //////p = v * z / (1 - z) + u * (1 - v) / (1 - u);
-            //////s = -x * y * v / (1 - z) - (1 - v) / (1 - u);
-            //////t = x * v / (1 - z * z) + (1 - v) / (1 - u * u);
-            //////q = x * z * v / (1 - z * z) + u * (1 - v) / (1 - u * u);
-            //////func = 2 * p * s / (t + q) + v * y * (1 + z) / (1 - z) + (1 - v) * (1 + u) / (1 - u);
-            //////func = -s / (t + q);
+            
             if (func == Double.PositiveInfinity) func = Double.MaxValue;
             if (func == Double.NegativeInfinity) func = -Double.MaxValue;
             return func;

@@ -24,8 +24,8 @@ namespace MethodsOptimisation
             int k = 0;
             while (true)
             {
-                //n._Nelder_Mid(x, r);
-                q._Newton_Raffson(x, r);
+                n._Nelder_Mid(x, r);
+                //q._Newton_Raffson(x, r);
                 double tmp = Fx.Func(Fx.x, r);
                 if (k > MAXITER) break;
                 if (Fx.P <= eps)

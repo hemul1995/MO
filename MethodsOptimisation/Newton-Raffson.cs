@@ -121,6 +121,74 @@ namespace MethodsOptimisation
         }
 
         double R;
+
+
+        public static void Fibonachi(double[] x, double[] dk, double a = -100, double b = 100, double l = 1e-7, double eps = 1e-7)
+        {
+            double[] tmpMass = new double[x.Length];
+            List<double> FN = new List<double>();
+            double y, z;
+            double _f1 = 1, _f2 = 1, F = 1;
+            for (int i = 3; ; i++)
+            {
+                F = _f1 + _f2;
+                _f1 = _f2;
+                _f2 = F;
+                if (F >= Math.Abs(b - a) / l)
+                {
+                    FN.Add(F);
+                    break;
+                }
+                else FN.Add(F);
+
+            }
+            int N = FN.Count - 1;
+
+            int k = 0;
+
+            y = a + FN[N - 2] / FN[N] * (b - a);
+            z = a + FN[N - 1] / FN[N] * (b - a);
+            double f1, f2;
+            while (true)
+            {
+                //
+                tmpMass.ToList().Select((q, i) => (tmpMass[i] = x[i] + y * dk[i])).ToArray();
+                f1 = Fx.Func(tmpMass, R);
+                tmpMass.ToList().Select((q, i) => (tmpMass[i] = x[i] + z * dk[i])).ToArray();
+                f2 = Fx.Func(tmpMass, R);
+
+                if (f1 <= f2)
+                {
+                    b = z;
+                    z = y;
+                    y = a + FN[N - k - 3] / FN[N - k - 1] * (b - a);
+                }
+                else
+                {
+                    a = y;
+                    y = z;
+                    z = a + FN[N - k - 2] / FN[N - k - 1] * (b - a);
+                }
+                if (k != N - 3) k++;
+                else
+                {
+                    y = z = (a + b) / 2;
+                    y = y = z;//даже не спрашивайте
+                    z = y + eps;
+                    if (f(y) <= f(z))
+                    {
+                        a = a;//и это не спрашивайте
+                        b = z;
+                    }
+                    else
+                    {
+                        a = y;
+                        b = b;//просто забейте, алгоритм такой :)
+                    }
+                    break;
+                }
+            }
+        }
         public void _Newton_Raffson(double[] x, double r = 0, double eps1 = 1e-7, double eps2 = 1e-7)
         {
             R = r;
