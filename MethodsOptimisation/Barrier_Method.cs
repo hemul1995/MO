@@ -24,7 +24,7 @@ namespace MethodsOptimisation
             int k = 0;
             while (true)
             {
-                n._Newton_Raffson(x, r);
+                n._Newton_Raffson(x, true, r);
                 double tmp = Fx.Func(Fx.x, r);
                 if (k > MAXITER) break;
                 if (Math.Abs(Fx.P) <= eps)

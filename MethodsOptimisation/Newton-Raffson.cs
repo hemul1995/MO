@@ -123,13 +123,13 @@ namespace MethodsOptimisation
         double R;
 
 
-        public static void Fibonachi(double[] x, double[] dk, double a = -100, double b = 100, double l = 1e-7, double eps = 1e-7)
+        public double Fibonachi(double[] x, double[] dk, double a = -100, double b = 100, double l = 1e-7, double eps = 1e-7)
         {
             double[] tmpMass = new double[x.Length];
             List<double> FN = new List<double>();
             double y, z;
             double _f1 = 1, _f2 = 1, F = 1;
-            for (int i = 3; ; i++)
+            for (; ;)
             {
                 F = _f1 + _f2;
                 _f1 = _f2;
@@ -175,7 +175,12 @@ namespace MethodsOptimisation
                     y = z = (a + b) / 2;
                     y = y = z;//даже не спрашивайте
                     z = y + eps;
-                    if (f(y) <= f(z))
+                    double tmp1, tmp2;
+                    tmpMass.ToList().Select((q, i) => (tmpMass[i] = x[i] + y * dk[i])).ToArray();
+                    tmp1 = Fx.Func(tmpMass, R);
+                    tmpMass.ToList().Select((q, i) => (tmpMass[i] = x[i] + z * dk[i])).ToArray();
+                    tmp2 = Fx.Func(tmpMass, R);
+                    if (tmp1 <= tmp2)
                     {
                         a = a;//и это не спрашивайте
                         b = z;
@@ -188,8 +193,13 @@ namespace MethodsOptimisation
                     break;
                 }
             }
+            double res = (a + b) / 2;
+            //x[index] = tmp;
+
+            return res;
+
         }
-        public void _Newton_Raffson(double[] x, double r = 0, double eps1 = 1e-7, double eps2 = 1e-7)
+        public void _Newton_Raffson(double[] x, bool isGold = true, double r = 0, double eps1 = 1e-7, double eps2 = 1e-7)
         {
             R = r;
             //Fx.CC = 0;
@@ -247,8 +257,10 @@ namespace MethodsOptimisation
                 }
 
                 //9-10
-                tk = goldenSection(x, dk, -100, 100, 1e-7);
-
+                if(isGold)
+                    tk = goldenSection(x, dk, -100, 100, 1e-7);
+                else
+                tk = Fibonachi(x, dk, -100, 100, 1e-7, 1e-7);
                 //11
                 for (int i = 0; i < LENGTH; i++)
                 {

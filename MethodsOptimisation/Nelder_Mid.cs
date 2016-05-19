@@ -14,9 +14,6 @@ namespace MethodsOptimisation
 
     class Nelder_Mid
     {
-
-
-
         public void _Nelder_Mid(double[] x, double r = 0)
         {
 
