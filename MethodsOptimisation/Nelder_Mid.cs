@@ -16,7 +16,6 @@ namespace MethodsOptimisation
     {
         public void _Nelder_Mid(double[] x, double r = 0)
         {
-
             int X_LENGTH = x.Length;
             int SMP_LENGTH = X_LENGTH + 1;
             point[] smp = new point[SMP_LENGTH];

@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Fx.cs" />
     <Compile Include="Gauss.cs" />
+    <Compile Include="Global_Search.cs" />
     <Compile Include="Nelder_Mid.cs" />
     <Compile Include="Newton-Raffson.cs" />
     <Compile Include="Penalty_Method.cs" />

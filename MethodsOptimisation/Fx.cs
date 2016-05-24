@@ -27,7 +27,7 @@ namespace MethodsOptimisation
              * 
              * 
             **/
-            //func = (arg[0] - arg[1]) * (arg[0] - arg[1]) * Math.Cos(arg[0]) * Math.Cos(arg[1] / Math.Sqrt(2)) + 2;
+            func = 20 + arg[0] * arg[0] + arg[1] * arg[1] - 10 * (Math.Cos(2 * Math.PI * arg[0]) + Math.Cos(2 * Math.PI * arg[0]));
 
             /**
              * Himmelblau function
@@ -66,7 +66,7 @@ namespace MethodsOptimisation
              * Beale's function
              * (3, 0.5) -> 0
             **/
-            func = (1.5 - arg[0] + arg[0] * arg[1]) * (1.5 - arg[0] + arg[0] * arg[1]) + (2.25 - arg[0] + arg[0] * arg[1] * arg[1]) * (2.25 - arg[0] + arg[0] * arg[1] * arg[1]) + (2.625 - arg[0] + arg[0] * arg[1] * arg[1] * arg[1]) * (2.625 - arg[0] + arg[0] * arg[1] * arg[1] * arg[1]);
+            //func = (1.5 - arg[0] + arg[0] * arg[1]) * (1.5 - arg[0] + arg[0] * arg[1]) + (2.25 - arg[0] + arg[0] * arg[1] * arg[1]) * (2.25 - arg[0] + arg[0] * arg[1] * arg[1]) + (2.625 - arg[0] + arg[0] * arg[1] * arg[1] * arg[1]) * (2.625 - arg[0] + arg[0] * arg[1] * arg[1] * arg[1]);
 
             //double x = arg[0], y = arg[1], z = arg[2], u = arg[3], v = arg[4];
             //double p, s, t, q;
@@ -81,10 +81,10 @@ namespace MethodsOptimisation
 
             //Штрафные ограничения вида P(x, r) <- r/2 * [Σg(x) + ΣMax(0, _g(x))];
             //(-0.5 -0.5 ) -> 0.5
-            if (r != 0)
+   //         if (r != 0)
 
             //(1.2 1.44 ) -> 0.04
-                P = r / 2 * (Math.Pow(Math.Max(0, 2 - arg[0]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[1]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[2]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[3]), 2) + Math.Pow(Math.Max(0, 0 - arg[4]), 2) + Math.Pow(Math.Max(0, arg[0] - 100), 2) + Math.Pow(Math.Max(0, arg[1] - 2), 2) + Math.Pow(Math.Max(0, arg[2] - 0.45), 2) + Math.Pow(Math.Max(0, arg[3] - 0.45), 2) + Math.Pow(Math.Max(0, arg[4] - 1), 2));
+ //               P = r / 2 * (Math.Pow(Math.Max(0, 2 - arg[0]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[1]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[2]), 2) + Math.Pow(Math.Max(0, 0.1 - arg[3]), 2) + Math.Pow(Math.Max(0, 0 - arg[4]), 2) + Math.Pow(Math.Max(0, arg[0] - 100), 2) + Math.Pow(Math.Max(0, arg[1] - 2), 2) + Math.Pow(Math.Max(0, arg[2] - 0.45), 2) + Math.Pow(Math.Max(0, arg[3] - 0.45), 2) + Math.Pow(Math.Max(0, arg[4] - 1), 2));
                 //P = r / 2 * ((Math.Max(0, 1.2 - arg[0]) * Math.Max(0, 1.2 - arg[0])) + (Math.Max(0, 1.2 - arg[1]) * Math.Max(0, 1.2 - arg[1])) + (Math.Max(0, arg[0] - 2) * Math.Max(0, arg[0] - 2)) + (Math.Max(0, arg[1] - 2) * Math.Max(0, arg[1] - 2)));
             //(0.9 0.81 ) -> 0.001    
                 //P = r / 2 * ((Math.Max(0, -arg[0] - 1) * Math.Max(0, -arg[0] -1)) + (Math.Max(0, -arg[1] -1) * Math.Max(0, -arg[1] - 1)) + (Math.Max(0, arg[0] - 0.9) * Math.Max(0, arg[0] - 0.9)) + (Math.Max(0, arg[1] - 0.9) * Math.Max(0, arg[1] - 0.9)));
