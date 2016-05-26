@@ -26,6 +26,16 @@ namespace MethodsOptimisation
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string[] tt = textBox2.Text.Split(' ');
+            double[] x0 = new double[tt.Length];
+
+            for(int i = 0; i < tt.Length; i++)
+            {
+                tt[i] = tt[i].Replace('.', ',');
+                x0[i] = Double.Parse(tt[i]);
+            }
+
+
 
             //double[] x0 = new double[2];
             //Fx.CC = 0;
@@ -33,9 +43,7 @@ namespace MethodsOptimisation
             //x0[1] = 10;
             //Newton_Raffson r = new Newton_Raffson();
             //r._Newton_Raffson(x0, true);
-            double[] x = new double[2];
-            x[0] = 3;
-            x[1] = 3;
+
             Global_Search aa = new Global_Search();
             aa._Global_Search(x);
             textBox1.Text += "Значение функции:\r\n" + Fx.f + "\r\n";
@@ -44,7 +52,7 @@ namespace MethodsOptimisation
             {
                 textBox1.Text += c + "\r\n";
             }
-            textBox1.Text += "Кол-во итераций функции:\r\n" + Fx.CC + "\r\n\r\n";
+            textBox1.Text += "Кол-во итераций функции:\r\n" + Fx.iter + "\r\n\r\n";
 
             ////double[] x0 = new double[2];
             //Fx.CC = 0;
@@ -144,10 +152,6 @@ namespace MethodsOptimisation
             //    textBox1.Text += c + "\r\n";
             //}
             //textBox1.Text += "Кол-во итераций функции:\r\n" + Fx.CC;
-        }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
         }
     }
 }

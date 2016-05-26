@@ -20,6 +20,10 @@ namespace MethodsOptimisation
     }
     class Global_Search
     {
+        /// <summary>
+        /// Генерация точки в N-мерном прямоугольнике
+        /// </summary>
+        /// <returns></returns>
         public double[] RndInArea()
         {
             Random rnd = new Random();
@@ -28,7 +32,10 @@ namespace MethodsOptimisation
             x[1] = rnd.NextDouble(-50, 50);
             return x;
         }
-
+        /// <summary>
+        /// Метод глобального поиска
+        /// </summary>
+        /// <param name="x"></param>
         public void _Global_Search(double[] x)
         {
             double[] xmin = new double[x.Length];
@@ -40,10 +47,10 @@ namespace MethodsOptimisation
             {
                 if (k > K) break;
                 x = (double[])RndInArea().Clone();
-                Newton_Raffson n = new Newton_Raffson();
-                n._Newton_Raffson(x);
-                //Nelder_Mid q = new Nelder_Mid();
-                //q._Nelder_Mid(x);
+                //Newton_Raffson n = new Newton_Raffson();
+                //n._Newton_Raffson(x);
+                Nelder_Mid q = new Nelder_Mid();
+                q._Nelder_Mid(x);
                 xk = (double[])Fx.x.Clone();
                 if (Fx.f < fk)
                 {

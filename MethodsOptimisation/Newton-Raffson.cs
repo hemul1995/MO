@@ -9,7 +9,13 @@ namespace MethodsOptimisation
 {
     class Newton_Raffson
     {
-        private double getDerivate1(double[] x, int index)
+        /// <summary>
+        /// Вычисление 1 производной функции
+        /// </summary>
+        /// <param name="x">В точке</param>
+        /// <param name="index">По какой переменной</param>
+        /// <returns></returns>
+        private double getDerivate(double[] x, int index)
         {
             double h = 1e-7, p1, p;
             double tmp = x[index];
@@ -24,20 +30,24 @@ namespace MethodsOptimisation
             p = p1;
             return p;
         }
+        /// <summary>
+        /// Метод Золотого сечения
+        /// Вычисление минимума одномерной функции f(x + tk * dk) относительно tk
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="dk"></param>
+        /// <param name="a">Левая граница</param>
+        /// <param name="b">Правая граница</param>
+        /// <param name="eps">Точность</param>
+        /// <returns>tk</returns>
         public double goldenSection(double[] x, double[] dk, double a, double b, double eps)
         {
-            //double tmp = x[index];
             double T1;
             T1 = 0.381966;
-            //T2 = 1 - T1;
             double[] tmpMass = new double[x.Length];
-            //do
-            //{
             double x1, x2;
             x1 = a + (b - a) * T1;
             x2 = b - (b - a) * T1;
-            //x[index] = (x1 + x2) / 2;
-
             double F1, F2;
             tmpMass.ToList().Select((z, i) => (tmpMass[i] = x[i] + x1 * dk[i])).ToArray();
             F1 = Fx.Func(tmpMass, R);
@@ -69,11 +79,17 @@ namespace MethodsOptimisation
             while (true);
 
             double res = (a + b) / 2;
-            //x[index] = tmp;
-
             return res;
-
         }
+        /// <summary>
+        /// Вычисление 2 производной
+        /// </summary>
+        /// <param name="x">В точке</param>
+        /// <param name="index1">По какой переменной</param>
+        /// <param name="index2">По какой переменной</param>
+        /// <param name="hx">Точность</param>
+        /// <param name="hy">Точность</param>
+        /// <returns></returns>
         double SecondDerivative(double[] x, int index1, int index2, double hx = 1e-7, double hy = 1e-7)
         {
             double tmp1 = x[index1], tmp2 = x[index2];
@@ -92,17 +108,27 @@ namespace MethodsOptimisation
             x[index2] = tmp2;
             return (f1 - f2 - f3 + f4) / (4 * hx * hy);
         }
-        void gesse(Matrix<double> Gesse, double[] x, double LENGTH)
+        /// <summary>
+        /// Построение матрицы 2 производных
+        /// </summary>
+        /// <param name="Gesse">Её строим</param>
+        /// <param name="x"></param>
+        /// <param name="LENGTH"></param>
+        void buildGesse(Matrix<double> Gesse, double[] x, double LENGTH)
         {
             for (int i = 0; i < LENGTH; i++)
                 for (int j = i; j < LENGTH; j++)
                 {
                     Gesse[i, j] = Gesse[j, i] = SecondDerivative(x, i, j);
                 }
-
         }
 
-        bool positivOpred(Matrix<double> Gesse)
+        /// <summary>
+        /// Проверка на положительную определенность матрицы
+        /// </summary>
+        /// <param name="Gesse"></param>
+        /// <returns></returns>
+        bool criterionSilvestr(Matrix<double> Gesse)
         {
             Matrix<double> G = Gesse.Clone();
             double det;
@@ -117,19 +143,28 @@ namespace MethodsOptimisation
 
             }
             return true;
-
         }
 
         double R;
 
-
+        /// <summary>
+        /// Метод Фибоначчи
+        /// Вычисление минимума одномерной функции f(x + tk * dk) относительно tk
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="dk"></param>
+        /// <param name="a">Левая граница</param>
+        /// <param name="b">Правая граница</param>
+        /// <param name="l">Длина конечного интервала</param>
+        /// <param name="eps">Точность</param>
+        /// <returns>tk</returns>
         public double Fibonachi(double[] x, double[] dk, double a = -100, double b = 100, double l = 1e-7, double eps = 1e-7)
         {
             double[] tmpMass = new double[x.Length];
             List<double> FN = new List<double>();
             double y, z;
             double _f1 = 1, _f2 = 1, F = 1;
-            for (; ;)
+            while(true)
             {
                 F = _f1 + _f2;
                 _f1 = _f2;
@@ -143,15 +178,12 @@ namespace MethodsOptimisation
 
             }
             int N = FN.Count - 1;
-
             int k = 0;
-
             y = a + FN[N - 2] / FN[N] * (b - a);
             z = a + FN[N - 1] / FN[N] * (b - a);
             double f1, f2;
             while (true)
             {
-                //
                 tmpMass.ToList().Select((q, i) => (tmpMass[i] = x[i] + y * dk[i])).ToArray();
                 f1 = Fx.Func(tmpMass, R);
                 tmpMass.ToList().Select((q, i) => (tmpMass[i] = x[i] + z * dk[i])).ToArray();
@@ -173,7 +205,7 @@ namespace MethodsOptimisation
                 else
                 {
                     y = z = (a + b) / 2;
-                    y = y = z;//даже не спрашивайте
+                    y = y = z;
                     z = y + eps;
                     double tmp1, tmp2;
                     tmpMass.ToList().Select((q, i) => (tmpMass[i] = x[i] + y * dk[i])).ToArray();
@@ -182,28 +214,32 @@ namespace MethodsOptimisation
                     tmp2 = Fx.Func(tmpMass, R);
                     if (tmp1 <= tmp2)
                     {
-                        a = a;//и это не спрашивайте
                         b = z;
                     }
                     else
                     {
                         a = y;
-                        b = b;//просто забейте, алгоритм такой :)
                     }
                     break;
                 }
             }
             double res = (a + b) / 2;
-            //x[index] = tmp;
-
             return res;
-
         }
+
+        /// <summary>
+        /// Метод Ньютона - Раффсона
+        /// Вычисление минимума многомерной функции
+        /// </summary>
+        /// <param name="x">Начальное приближение</param>
+        /// <param name="isGold">Если true, то используется метод Золотого сечения, иначе метод Фибоначчи</param>
+        /// <param name="r">Коэфициент штрафа(по умолчанию равен 0)</param>
+        /// <param name="eps1">Точность градиента</param>
+        /// <param name="eps2">Точность точки и значения относительно истинных</param>
         public void _Newton_Raffson(double[] x, bool isGold = true, double r = 0, double eps1 = 1e-7, double eps2 = 1e-7)
         {
             R = r;
-            //Fx.CC = 0;
-            int MAXITER = 10000;
+            const int MAXITER = 10000;
             int LENGTH = x.Length;
             double[] grad = new double[LENGTH];
             Matrix<double> Gesse = DenseMatrix.OfArray(new double[LENGTH, LENGTH]);
@@ -216,23 +252,23 @@ namespace MethodsOptimisation
                 //3
                 for (int i = 0; i < LENGTH; i++)
                 {
-                    grad[i] = getDerivate1(x, i);
+                    grad[i] = getDerivate(x, i);
                 }
 
                 //4
-                if (Math.Sqrt(grad.Sum(a => a * a)) <= eps1 /*|| Math.Sqrt(grad.Sum(a => a * a)) >= 1 / eps1*/) break;  //2 условие - костыль
+                if (Math.Sqrt(grad.Sum(a => a * a)) <= eps1) break;
 
                 //5
                 if (k >= MAXITER) break;
 
                 //6
-                gesse(Gesse, x, LENGTH);
+                buildGesse(Gesse, x, LENGTH);
 
                 //7
                 Gesse = Gesse.Inverse();
 
                 //8
-                if (positivOpred(Gesse) == true)
+                if (criterionSilvestr(Gesse) == true)
                 {
                     /*перемножить матрицу на вектор*/
                     double[] tmp = new double[LENGTH];
@@ -241,8 +277,6 @@ namespace MethodsOptimisation
                         {
                             tmp[i] += Gesse[i, j] * grad[j];
                         }
-
-
                     for (int i = 0; i < LENGTH; i++)
                     {
                         dk[i] = -tmp[i];
@@ -265,8 +299,6 @@ namespace MethodsOptimisation
                 for (int i = 0; i < LENGTH; i++)
                 {
                     x1[i] = x[i] + tk * dk[i];
-                    //    if (x1[i] > 2) x1[i] = 2;
-                    //    if (x1[i] < 1.2) x1[i] = 1.2;
                 }
 
                 //12
@@ -285,11 +317,8 @@ namespace MethodsOptimisation
                     k++;
                 }
             }
-
             Fx.x = x;
             Fx.f = Fx.Func(x, R);
         }
-
-
     }
 }

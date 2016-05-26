@@ -10,15 +10,19 @@ namespace MethodsOptimisation
     {
         public static double f;
         public static double[] x;
-        public static Dictionary<double, double> kash = new Dictionary<double, double>();
-        public static int CC;
+        public static int iter;
         public static double P = 0;
+        /// <summary>
+        /// Вычисление значения функции
+        /// </summary>
+        /// <param name="arg">Точка</param>
+        /// <param name="r">Коэфициент штрафа(по умолчанию равен 0)</param>
+        /// <returns></returns>
         public static double Func(double[] arg, double r = 0)
         {
-
             P = 0;
             double func;
-            CC++;
+            iter++;
 
             /**
              * Global-min function

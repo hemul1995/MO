@@ -8,19 +8,17 @@ namespace MethodsOptimisation
 {
     class Barrier_Method
     {
+        /// <summary>
+        /// Метод барьерных функций
+        /// </summary>
+        /// <param name="x">Начальное приближение</param>
+        /// <param name="r">Коэффициент штрафа</param>
+        /// <param name="C">Коэффициент штрафа</param>
+        /// <param name="eps">Точность</param>
         public void _Barrier_Method(double[] x, double r, double C, double eps = 1e-7)
         {
-            int MAXITER = 10000;
+            const int MAXITER = 10000;
             Newton_Raffson n = new Newton_Raffson();
-            Fx.CC = 0;
-
-            /*Равенства*/
-
-
-            /*Неравенства*/
-
-
-
             int k = 0;
             while (true)
             {
@@ -39,10 +37,8 @@ namespace MethodsOptimisation
                     k++;
                 }
             }
-
             Fx.x = x;
             Fx.f = Fx.Func(x);
-
         }
     }
 }

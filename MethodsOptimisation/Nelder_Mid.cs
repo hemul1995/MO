@@ -14,6 +14,12 @@ namespace MethodsOptimisation
 
     class Nelder_Mid
     {
+        /// <summary>
+        /// Метод Нелдера - Мида(Деформирующего многогранника)
+        /// Вычисление минимума многомерной функции
+        /// </summary>
+        /// <param name="x">Начальное приближение</param>
+        /// <param name="r">Коэфициент штрафа(по умолчанию равен 0)</param>
         public void _Nelder_Mid(double[] x, double r = 0)
         {
             int X_LENGTH = x.Length;
@@ -41,7 +47,6 @@ namespace MethodsOptimisation
                     }
                 }
             }
-            //Fx.CC = 0;
             double[] xh = new double[X_LENGTH],
                      xg = new double[X_LENGTH],
                      xl = new double[X_LENGTH],
@@ -138,20 +143,14 @@ namespace MethodsOptimisation
                 {
                     //4c
                     flag = true;
-                    //tmpD = fh;
                     for (int i = 0; i < X_LENGTH; i++)
                     {
-                        //tmpV[i] = xh[i];
                         smp[SMP_LENGTH - 1].x[i] = xr[i];
-
-                        //xr[i] = tmpV[i];//
                         xr[i] = xh[i];//
                     }
 
 
                     smp[SMP_LENGTH - 1].f = fr;
-
-                    //fr = tmpD;
                     fr = fh;
                 }
                 //4d
@@ -168,19 +167,14 @@ namespace MethodsOptimisation
                     if (fs < fh)
                     {
                         //6
-                        //tmpD = fh;
                         for (int i = 0; i < X_LENGTH; i++)
                         {
-                            //tmpV[i] = xh[i];
-                            smp[SMP_LENGTH - 1].x[i] = xs[i];//
-                            //xs[i] = tmpV[i];//
+                            smp[SMP_LENGTH - 1].x[i] = xs[i];
                             xs[i] = xh[i];
 
                         }
                         smp[SMP_LENGTH - 1].f = fs;
                         fs = fh;
-                        //fs = tmpD;
-
                     }
                     else
                     {
@@ -201,9 +195,6 @@ namespace MethodsOptimisation
                     sf += (smp[i].f * smp[i].f - sr) * (smp[i].f * smp[i].f - sr);
                 sf /= SMP_LENGTH;
                 sr = 0;
-
-
-
             }
             while (K < 1000 && sf >= 1e-30);
 
@@ -211,7 +202,6 @@ namespace MethodsOptimisation
 
             Fx.f = fl;
             Fx.x = xl;
-            //return fl;
         }
     }
 }
